@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import os
+from db import *
 def main_account_screen():
     global main_screen
     main_screen = Tk()   # create a GUI window 
@@ -37,28 +38,28 @@ def home_page():
     Button(screen, text="LOG OUT", width=10,height=1,command=main_account_screen).pack()
 def item_page():
     item_screen=Toplevel(main_screen)
-    item_screen.geometry("500x350")
+    item_screen.geometry("500x500")
     Label(item_screen, text="Item Page").pack()
     Button(item_screen, text="INSERT",width=20, height=3,bd=10,command=item_page_form).pack()
     Button(item_screen, text="UPDATE",width=20, height=3,bd=10,command=update_item_form).pack()
     Button(item_screen, text="DISPLAY",width=20, height=3,bd=10,command=None).pack()
     Button(item_screen, text="DELETE",width=20, height=3,bd=10,command=delete_item_form).pack()
-    Button(item_screen, text="DISPLAY ALL",width=20, height=3,bd=10,command=None).pack()
+    Button(item_screen, text="DISPLAY ALL",width=20, height=3,bd=10,command=display_item_form).pack()
     Button(item_screen, text="Back",width=10,height=2,command=home_page).pack()
 def customer_page():
     cus_screen=Toplevel(main_screen)
-    cus_screen.geometry("600x400")
+    cus_screen.geometry("600x500")
     Label(cus_screen, text="Customer Page").pack()
     Button(cus_screen, text="INSERT",width=20, height=3,bd=10,command=customer_page_form).pack()
     Button(cus_screen, text="UPDATE",width=20, height=3,bd=10,command=update_customer_form).pack()
     Button(cus_screen, text="DISPLAY",width=20, height=3,bd=10,command=None).pack()
     Button(cus_screen, text="DELETE",width=20, height=3,bd=10,command=delete_customer_form).pack()
-    Button(cus_screen, text="DISPLAY ALL",width=20, height=3,bd=10,command=None).pack()
+    Button(cus_screen, text="DISPLAY ALL",width=20, height=3,bd=10,command=display_customer_form).pack()
     Button(cus_screen, text="UPDATE BALANCE",width=20, height=3,bd=10).pack()
     Button(cus_screen, text="Back",width=10,height=2,command=home_page).pack()
 def item_page_form():
     it=Toplevel(main_screen)
-    it.geometry("300x250")
+    it.geometry("300x450")
     Label(it,text="Item id").pack()
     it_id=StringVar()
     id1=Entry(it,textvariable=it_id).pack()
@@ -71,7 +72,8 @@ def item_page_form():
     Label(it,text="Item qnty").pack()
     it_qnty=StringVar()
     id1=Entry(it,textvariable=it_qnty).pack()
-    Button(it,text="Submit",width=10,height=2).pack()
+    Button(it,text="Submit",width=10,height=2,command=it.withdraw()).pack()
+    insert_item(it_id,it_name,it_cost,it_qnty)
 def update_item_form():
     uit=Toplevel(main_screen)
     uit.geometry("300x250")
@@ -131,5 +133,14 @@ def delete_customer_form():
     dt_id=StringVar()
     dd1=Entry(dt,textvariable=dt_id).pack()
     Button(dt,text="Delete",width=10,height=2).pack()
+def display_item_form():
+    dif=Toplevel(main_screen)
+    dif.geometry("300x250")
+    var = StringVar()  
+    msg = Message(dif,text=display_item).pack()
+def display_customer_form():
+    dcf=Toplevel(main_screen)
+    dcf.geometry("300x250")
+    var = StringVar()
+    msg = Message(dcf,text=Display_customer).pack() 
 main_account_screen()
-
