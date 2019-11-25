@@ -1,0 +1,177 @@
+from tkinter import *
+from tkinter import messagebox
+from tkinter import ttk
+import os
+import time
+from db import *
+def main_account_screen():
+    global main_screen
+    main_screen = Tk()   # create a GUI window 
+    main_screen.geometry("300x250") # set the configuration of GUI window 
+    main_screen.title("XYZ Super Market") # set the title of GUI window
+    
+    
+    #login_screen.geometry("300x250")
+    Label(main_screen, text="Please enter details below to login").pack()
+    Label(main_screen, text="").pack()
+
+    global username_verify
+    global password_verify
+
+    username_verify = StringVar()
+    password_verify = StringVar()
+    Label(main_screen, text="Username  ").pack()
+    username_login_entry = Entry(main_screen, textvariable=username_verify)
+    username_login_entry.pack()
+    Label(main_screen, text="").pack()
+    Label(main_screen, text="Password  ").pack()
+    password__login_entry = Entry(main_screen, textvariable=password_verify, show= '*')
+    password__login_entry.pack()
+    Label(main_screen, text="").pack()
+    Button(main_screen, text="Login", width=10, height=1, command=verify).pack()
+    main_screen.mainloop()
+def verify():
+    if(username_verify.get()=="hello" and password_verify.get()=="world"):
+        home_page()
+    else:
+        messagebox.showinfo("Title","invalid usewrname/password")
+def home_page():
+    global screen
+    screen=Toplevel(main_screen)
+    screen.geometry("300x250")
+    Label(screen, text="Home Page").pack()
+    Label(screen, text="").pack()
+    Button(screen, text="ITEM",width=20, height=3,bd=10,command=item_page ).pack()
+    Button(screen, text="CUSTOMER", width=20, height=3,bd=10,command=customer_page).pack()
+    Button(screen, text="LOG OUT", width=10,height=1,command=main_logout).pack()
+def main_logout():
+    main_screen.withdraw()
+    screen.withdraw()
+    main_account_screen()
+def item_page():
+    global item_screen
+    item_screen=Toplevel(main_screen)
+    #main_screen.withdraw()
+    item_screen.geometry("500x500")
+    Label(item_screen, text="Item Page").pack()
+    Button(item_screen, text="INSERT",width=20, height=3,bd=10,command=item_page_form).pack()
+    Button(item_screen, text="UPDATE",width=20, height=3,bd=10,command=update_item_form).pack()
+    Button(item_screen, text="DISPLAY",width=20, height=3,bd=10,command=None).pack()
+    Button(item_screen, text="DELETE",width=20, height=3,bd=10,command=delete_item_form).pack()
+    Button(item_screen, text="DISPLAY ALL",width=20, height=3,bd=10,command=display_item_form).pack()
+    Button(item_screen, text="Back",width=10,height=2,command=back_item).pack()
+def back_item():
+    item_screen.withdraw()
+    screen.mainloop()
+def customer_page():
+    global cus_screen
+    cus_screen=Toplevel(main_screen)
+    cus_screen.geometry("600x500")
+    Label(cus_screen, text="Customer Page").pack()
+    Button(cus_screen, text="INSERT",width=20, height=3,bd=10,command=customer_page_form).pack()
+    Button(cus_screen, text="UPDATE",width=20, height=3,bd=10,command=update_customer_form).pack()
+    Button(cus_screen, text="DISPLAY",width=20, height=3,bd=10,command=None).pack()
+    Button(cus_screen, text="DELETE",width=20, height=3,bd=10,command=delete_customer_form).pack()
+    Button(cus_screen, text="DISPLAY ALL",width=20, height=3,bd=10,command=display_customer_form).pack()
+    Button(cus_screen, text="UPDATE BALANCE",width=20, height=3,bd=10).pack()
+    Button(cus_screen, text="Back",width=10,height=2,command=back_cus).pack()
+def back_cus():
+    cus_screen.withdraw()
+    screen.mainloop()
+def item_page_form():
+    global it
+    it=Toplevel(main_screen)
+    it.geometry("300x450")
+    Label(it,text="Item id").pack()
+    it_id=StringVar()
+    id1=Entry(it,textvariable=it_id).pack()
+    Label(it,text="Item name").pack()
+    it_name=StringVar()
+    id1=Entry(it,textvariable=it_name).pack()
+    Label(it,text="Item cost").pack()
+    it_cost=StringVar()
+    id1=Entry(it,textvariable=it_cost).pack()
+    Label(it,text="Item qnty").pack()
+    it_qnty=StringVar()
+    id1=Entry(it,textvariable=it_qnty).pack()
+    Button(it,text="Submit",width=10,height=2,command=it.withdraw).pack()
+    #insert_item(it_id.get(),it_name.get(),it_cost.get(),it_qnty.get())
+def update_item_form():
+    global uit
+    uit=Toplevel(main_screen)
+    uit.geometry("300x250")
+    Label(uit,text="Item id").pack()
+    uit_id=StringVar()
+    id1=Entry(uit,textvariable=uit_id).pack()
+    Label(uit,text="Item name").pack()
+    uit_name=StringVar()
+    uid1=Entry(uit,textvariable=uit_name).pack()
+    Label(uit,text="Item cost").pack()
+    uit_cost=StringVar()
+    id1=Entry(uit,textvariable=uit_cost).pack()
+    Label(uit,text="Item qnty").pack()
+    uit_qnty=StringVar()
+    uid1=Entry(uit,textvariable=uit_qnty).pack()
+    Button(uit,text="Submit",width=10,height=2,command=uit.withdraw).pack()
+    #update_item(uit_id.get(),uit_name.get(),uit_cost.get(),uit_qnty.get())
+def delete_item_form():
+    global dit
+    dit=Toplevel(main_screen)
+    dit.geometry("300x250")
+    Label(dit,text="Item id").pack()
+    dit_id=StringVar()
+    dit1=Entry(dit,textvariable=dit_id).pack()
+    Button(dit,text="Delete",width=10,height=2,command=dit.withdraw).pack()
+    #delete_item(dit_id.get())
+def customer_page_form():
+    global ct
+    ct=Toplevel(main_screen)
+    ct.geometry("300x250")
+    Label(ct,text="customer id").pack()
+    ct_id=StringVar()
+    cd1=Entry(ct,textvariable=ct_id).pack()
+    Label(ct,text="customer name").pack()
+    ct_name=StringVar()
+    cd1=Entry(ct,textvariable=ct_name).pack()
+    Label(ct,text="customer mob").pack()
+    ct_mob=StringVar()
+    cd1=Entry(ct,textvariable=ct_mob).pack()
+    Label(ct,text="customer balance").pack()
+    ct_bal=StringVar()
+    cd1=Entry(ct,textvariable=ct_bal).pack()
+    Button(ct,text="Submit",width=10,height=2,command=ct.withdraw).pack()
+    #insert_customer(ct_id.get(),ct_name.get(),ct_mob.get(),ct_bal.get())
+    
+def update_customer_form():
+    global uct
+    uct=Toplevel(main_screen)
+    uct.geometry("300x250")
+    Label(uct,text="customer id").pack()
+    uct_id=StringVar()
+    cd1=Entry(uct,textvariable=uct_id).pack()
+    Label(uct,text="customer name").pack()
+    uct_name=StringVar()
+    cd1=Entry(uct,textvariable=uct_name).pack()
+    Label(uct,text="customer mob").pack()
+    uct_mob=StringVar()
+    cd1=Entry(uct,textvariable=uct_mob).pack()
+    Button(uct,text="Submit",width=10,height=2,command=uct.withdraw).pack()
+    #update_customer(uct_id.get(),uct_name.get(),uct_mob.get())
+def delete_customer_form():
+    global dt
+    dt=Toplevel(main_screen)
+    dt.geometry("300x250")
+    Label(dt,text="customer id").pack()
+    dt_id=StringVar()
+    dd1=Entry(dt,textvariable=dt_id).pack()
+    Button(dt,text="Delete",width=10,height=2,command=dt.withdraw).pack()
+    #delete_customer(dt_id.get())
+def display_item_form():
+    var = StringVar()
+    var="gjdfjg"
+    messagebox.showinfo("XYZ Super Market",var)
+def display_customer_form():
+    var = StringVar()
+    var="mkgbasdfjg"
+    messagebox.showinfo("XYZ Super Market",var)
+main_account_screen()
