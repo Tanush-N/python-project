@@ -4,7 +4,7 @@ from tkinter import ttk
 import os
 import time
 from db import *
-
+list=[]
 def main_account_screen():
     global main_screen
     main_screen = Tk()   # create a GUI window 
@@ -88,6 +88,7 @@ def back_cus():
     cus_screen.withdraw()
     home_page()
 def item_page_form():
+    list=None
     global it
     it=Toplevel(main_screen)
     it.geometry("300x450")
@@ -103,13 +104,17 @@ def item_page_form():
     Label(it,text="Item qnty").pack()
     it_qnty=StringVar()
     id1=Entry(it,textvariable=it_qnty).pack()
-    Button(it,text="Submit",width=10,height=2,command=it.withdraw).pack()
+    Button(it,text="Submit",width=10,height=2,command=send_values).pack()
     #def validate():
      #   if(it_id and it_name and it_cost and it_qnty):
       #      return true
     #if (validate()==False):
      #   messagebox.showinfo("Title","insufficient information")
-    #insert_item(it_id.get(),it_name.get(),it_cost.get(),it_qnty.get())    
+     list=[it_id.get(),it_name.get(),it_cost.get(),it_qnty.get()]
+    #insert_item(it_id.get(),it_name.get(),it_cost.get(),it_qnty.get())
+def send_values():
+    it.withdraw()
+    insert_item(list[0],list[1],list[2],list[3])
 def update_item_form():
     global uit
     uit=Toplevel(main_screen)
