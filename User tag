@@ -1,0 +1,4 @@
+if val in user_tag:
+   del d[val][stored_val]
+else:
+   d.append(val)
