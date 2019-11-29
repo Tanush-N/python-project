@@ -1,4 +1,5 @@
-if val in user_tag:
-   del mydict[val][preval]
-else:
-   mydict[val]={}
+usertagcheck (String val):
+   if val in user_tag:
+      del mydict[val][preval]
+   else:
+      mydict[val]={}
