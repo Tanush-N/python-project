@@ -1,4 +1,4 @@
 if val in user_tag:
-   del d[val][stored_val]
+   del mydict[val][preval]
 else:
-   d.append(val)
+   mydict[val]={}
